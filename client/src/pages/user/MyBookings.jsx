@@ -7,7 +7,7 @@ const MyBookings = () => {
 
   useEffect(() => {
     const storedUserId = localStorage.getItem("userId");
-    if (storedUserId) fetchBookings(storedUserId);
+    if (storedUserId) fetchBookings(storedUserId);//..
   }, []);
 
   const fetchBookings = async (userId) => {
