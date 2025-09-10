@@ -54,7 +54,7 @@ function App() {
 <Route path="/my-booking"element={<MySalonBookings/>}/>
 
       </Routes>
-      <Footer />
+      
     </>
   );
 }
