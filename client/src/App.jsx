@@ -1,11 +1,11 @@
 
 
-import { Routes, Route } from 'react-router-dom';
-
+import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
+import Home from './pages/Home'
 import LanguageSelector from './context/LanguageSelector';
 import RegisterPage from './pages/RegisterPage';
 import UserRegister from './pages/UserRegister';
-
+import Nav from './components/Nav'
 import Navbar from './components/Navbar';
 import Login from './pages/Login';
 import Footer from './components/Footer';
@@ -29,9 +29,9 @@ function App() {
   return (
     <>
       <LanguageSelector />
-
+    {location.pathname === "/" ? <Nav /> : <Navbar />}
       <Routes>
-        <Route path="/" element={<Login />} />
+        <Route path="/" element={<Home />} />
 
         <Route path="/register/shop" element={<SalonRegistration />} />
         <Route path="/login" element={<Login />} />
