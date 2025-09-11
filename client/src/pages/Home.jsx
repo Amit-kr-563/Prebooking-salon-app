@@ -5,6 +5,9 @@ import hero2 from "../assets/hero2.jpg";
 import hero3 from "../assets/hero3.jpg";
 import hero4 from "../assets/hero4.jpg";
 import hero5 from "../assets/hero5.jpg";
+import support1 from "../assets/24s.jpg"
+import support2 from "../assets/cs.jpg"
+import support3 from "../assets/stylish.jpg"
 import Footer from "../components/Footer"
 
 const Home = () => {
@@ -143,36 +146,37 @@ const Home = () => {
             </section>
 
             {/* Features Section */}
-            <section id="features" className="w-full py-12 sm:py-20 bg-gray-100">
-                <div className="max-w-6xl mx-auto text-center px-4">
-                    <h2 className="text-3xl sm:text-4xl font-semibold mb-8 sm:mb-10">Why Choose Us</h2>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 sm:gap-8">
-                        {[
-                            {
-                                title: "24/7 Availability",
-                                desc: "Book appointments anytime, we are always open.",
-                                img: "https://images.unsplash.com/photo-1588776814546-8a8f8b0f8bfc?crop=entropy&cs=tinysrgb&fit=max&h=150&w=150"
-                            },
-                            {
-                                title: "Customer Support",
-                                desc: "Our friendly staff is here to assist you.",
-                                img: "https://images.unsplash.com/photo-1600180759026-7cf7681f2a1d?crop=entropy&cs=tinysrgb&fit=max&h=150&w=150"
-                            },
-                            {
-                                title: "Professional Stylists",
-                                desc: "Skilled experts to give you the best style.",
-                                img: "https://images.unsplash.com/photo-1600180759151-77d072f21b72?crop=entropy&cs=tinysrgb&fit=max&h=150&w=150"
-                            },
-                        ].map((feature, index) => (
-                            <div key={index} className="p-4 bg-white rounded shadow hover:scale-105 transition transform duration-300">
-                                <img src={feature.img} alt={feature.title} className="w-24 h-24 mx-auto mb-4 object-cover shadow-sm rounded-full" />
-                                <h3 className="text-xl font-semibold mb-2">{feature.title}</h3>
-                                <p className="text-gray-600 text-sm">{feature.desc}</p>
-                            </div>
-                        ))}
-                    </div>
+<section id="features" className="w-full py-12 sm:py-20 bg-gray-100">
+    <div className="max-w-6xl mx-auto text-center px-4">
+        <h2 className="text-3xl sm:text-4xl font-semibold mb-8 sm:mb-10">Why Choose Us</h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 sm:gap-8">
+            {[
+                {
+                    title: "24/7 Availability",
+                    desc: "Book appointments anytime, we are always open.",
+                    img: support1
+                },
+                {
+                    title: "Customer Support",
+                    desc: "Our friendly staff is here to assist you.",
+                    img: support2
+                },
+                {
+                    title: "Professional Stylists",
+                    desc: "Skilled experts to give you the best style.",
+                    img: support3
+                },
+            ].map((feature, index) => (
+                <div key={index} className="p-4 bg-white rounded shadow hover:scale-105 transition transform duration-300">
+                    <img src={feature.img} alt={feature.title} className="w-full h-48 mb-4 object-cover rounded-md" />
+                    <h3 className="text-xl font-semibold mb-2">{feature.title}</h3>
+                    <p className="text-gray-600 text-sm">{feature.desc}</p>
                 </div>
-            </section>
+            ))}
+        </div>
+    </div>
+</section>
+
          <Footer />
         </>
     );
