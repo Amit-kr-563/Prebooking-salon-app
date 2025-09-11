@@ -1,10 +1,10 @@
 import React, { useRef, useEffect } from "react";
 import Nav from "../components/Nav";
-import hero1 from "../assets/login-img.png";
-import hero2 from "../assets/login-img.png";
-import hero3 from "../assets/login-img.png";
-import hero4 from "../assets/login-img.png";
-import hero5 from "../assets/login-img.png";
+import hero1 from "../assets/hero1.jpg";
+import hero2 from "../assets/hero2.jpg";
+import hero3 from "../assets/hero3.jpg";
+import hero4 from "../assets/hero4.jpg";
+import hero5 from "../assets/hero5.jpg";
 import Footer from "../components/Footer"
 
 const Home = () => {
