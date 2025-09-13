@@ -5,7 +5,7 @@ import Logo from "../assets/logo.png"
 
 export default function Footer() {
   return (
-    <footer className="bg-gray-200 text-gray-700 px-6 py-10 ">
+    <footer className="bg-teal-100 text-gray-700 px-6 py-10 ">
       <div className="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
         {/* Brand Section */}
         <div>
@@ -22,7 +22,7 @@ export default function Footer() {
 
         {/* Important Links */}
         <div>
-          <h2 className="font-semibold mb-3">Important Links</h2>
+          <h2 className="font-bold mb-3">Important Links</h2>
           <ul className="space-y-2 text-sm">
             <li><Link to="/about" className="hover:underline">About Us</Link></li>
 
@@ -35,7 +35,7 @@ export default function Footer() {
 
         {/* Legal */}
         <div>
-          <h2 className="font-semibold mb-3">Legal</h2>
+          <h2 className="font-bold mb-3">Legal</h2>
           <ul className="space-y-2 text-sm">
             <li><Link to="/terms" className="hover:underline">Terms of Service</Link></li>
 
@@ -48,8 +48,8 @@ export default function Footer() {
 
         {/* Connect */}
         <div>
-          <h2 className="font-semibold mb-3">Connect</h2>
-          <div className="flex space-x-4 text-purple-800 text-xl">
+          <h2 className="font-bold mb-3">Connect</h2>
+          <div className="flex space-x-4 text-teal-900 text-xl">
             <a href="#"><FaTwitter /></a>
             <a href="#"><FaGithub /></a>
             <a href="#"><FaLinkedin /></a>
