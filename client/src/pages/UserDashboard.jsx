@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import UserNavbar from "../components/UserNavbar";
@@ -13,7 +14,7 @@ import headMassage from "../assets/massage.jpg";
 import haircutWomen from "../assets/w-cut.jpg";
 import facial from "../assets/wface.jpg";
 import manicure from "../assets/wpedi.jpg";
-import pedicure from "../assets/wpedi.jpg"
+import pedicure from "../assets/wpedi.jpg";
 import threading from "../assets/wspa.jpg";
 
 import massage from "../assets/massage.jpg";
@@ -21,6 +22,7 @@ import bridal from "../assets/ob.jpg";
 import skinCare from "../assets/massage.jpg";
 import nailArt from "../assets/massage.jpg";
 import hairStyling from "../assets/massage.jpg";
+
 
 const UserDashboard = () => {
   const [user, setUser] = useState(null);
