@@ -46,7 +46,7 @@ const UserNavbar = () => {
   ];
 
   return (
-    <nav className="w-full bg-gray-300 shadow-md fixed top-0 left-0 z-50">
+    <nav className="w-full bg-teal-100 shadow-md fixed top-0 left-0 z-50">
       <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
         {/* Logo */}
         <div
@@ -78,7 +78,7 @@ const UserNavbar = () => {
                   <button
                     key={idx}
                     onClick={() => navigate(item.path)}
-                    className="px-4 py-2 text-left text-gray-700 hover:bg-indigo-50 hover:text-indigo-600 rounded-lg transition"
+                    className="px-4 py-2 text-left text-gray-700 hover:bg-indigo-50 hover:text-teal-800 rounded-lg transition"
                   >
                     {item.name}
                   </button>

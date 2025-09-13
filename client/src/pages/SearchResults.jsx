@@ -1,15 +1,15 @@
-
-import React, { useEffect, useState } from 'react';
-import { useLocation,useNavigate } from 'react-router-dom';
-import { FaStar, FaMapMarkerAlt } from 'react-icons/fa';
-import { searchSalons } from '../service/api';
+import React, { useEffect, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import { FaStar, FaMapMarkerAlt } from "react-icons/fa";
+import { searchSalons } from "../service/api";
+import Navbar from "../components/UserNavbar";
 
 const SearchResults = () => {
-  const navigate=useNavigate();
+  const navigate = useNavigate();
   const location = useLocation();
   const [results, setResults] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [activeFilter, setActiveFilter] = useState('Rating');
+  const [activeFilter, setActiveFilter] = useState("Rating");
 
   const searchParams = location.state || {};
 
@@ -19,8 +19,8 @@ const SearchResults = () => {
         const { data } = await searchSalons(searchParams);
         setResults(data.salons || []);
       } catch (err) {
-        console.error('Search failed', err);
-        alert('Failed to fetch results');
+        console.error("Search failed", err);
+        alert("Failed to fetch results");
       } finally {
         setLoading(false);
       }
@@ -31,103 +31,107 @@ const SearchResults = () => {
 
   const handleFilter = (type) => {
     let sorted = [...results];
-    if (type === 'Rating') {
+    if (type === "Rating") {
       sorted.sort((a, b) => (b.rating || 0) - (a.rating || 0));
     }
     setActiveFilter(type);
     setResults(sorted);
   };
 
-  if (loading) return <p className="p-8 text-lg text-center">Loading search results...</p>;
+  if (loading)
+    return (
+      <p className="p-8 text-lg text-center text-gray-600">Loading search results...</p>
+    );
 
   return (
-    <div className="min-h-screen p-6 bg-[#f6f3fd] text-[#1c0631] font-sans">
-      <h2 className="text-2xl font-bold mb-4">Available Salons</h2>
+    <>
+      <Navbar />
+      <div className="min-h-screen bg-gray-50 text-gray-800 font-sans p-4 sm:p-6 md:p-8 mt-20 sm:mt-20">
+        <h2 className="text-2xl font-bold mb-6 text-center">Available Salons</h2>
 
-      {/* Filters */}
-      <div className="flex gap-2 mb-6">
-        {['Rating', 'Price: Low to High', 'Price: High to Low', 'Nearby'].map((filter) => (
-          <button
-            key={filter}
-            onClick={() => handleFilter(filter)}
-            className={`px-4 py-2 rounded-md border ${
-              activeFilter === filter
-                ? 'bg-purple-800 text-white'
-                : 'bg-white text-black'
-            }`}
-            disabled={filter === 'Nearby'}
-          >
-            {filter}
-          </button>
-        ))}
-      </div>
-
-      {/* Search Results */}
-      {results.length === 0 ? (
-        <p>No salons found.</p>
-      ) : (
-        <div className="grid grid-cols-1 gap-6">
-          {results.map((salon) => (
-            <div
-              key={salon._id}
-              className="bg-white rounded-xl shadow-md overflow-hidden max-w-md"
+        {/* Filters */}
+        <div className="flex justify-center gap-3 flex-wrap mb-8">
+          {["Rating", "Price: Low to High", "Price: High to Low", "Nearby"].map((filter) => (
+            <button
+              key={filter}
+              onClick={() => handleFilter(filter)}
+              className={`px-4 py-2 rounded-md border transition ${
+                activeFilter === filter
+                  ? "bg-teal-700 text-white border-teal-700"
+                  : "bg-white text-gray-700 border-gray-300 hover:bg-teal-800"
+              }`}
+              disabled={filter === "Nearby"}
             >
-              <img
-                src={`http://localhost:5000/uploads/${salon.shopFrontPhoto}`}
-                alt={salon.salonName}
-                className="w-full h-60 object-cover"
-              />
-              <div className="p-4">
-                <h3 className="font-bold text-lg">{salon.salonName}</h3>
-                <p className="flex items-center text-sm text-gray-600 mt-1">
-                  <FaMapMarkerAlt className="mr-1 text-purple-800" /> {salon.address}
-                </p>
-                <a
-                  href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
-                    salon.address
-                  )}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-sm text-purple-700 underline mt-1 inline-block"
-                >
-                  View on Map
-                </a>
-<div className="flex items-center mt-2 text-yellow-600">
-  <FaStar className="mr-1" />
-  <span className="text-sm">
-    {salon.rating > 0 ? salon.rating.toFixed(1) : "No rating yet"}
-    {salon.reviewCount > 0 && (
-      <span className="text-gray-600 ml-1">
-        ({salon.reviewCount} reviews)
-      </span>
-    )}
-  </span>
-</div>
-
-
-                <div className="flex flex-wrap gap-2 mt-3">
-  {salon.servicesAndTiming?.services?.map((service, idx) => (
-    <span
-      key={idx}
-      className="px-2 py-1 text-sm bg-purple-100 text-purple-800 rounded-md"
-    >
-      {service.name}
-    </span>
-  ))}
-</div>
-
-                  <button
-  className="w-full bg-purple-800 text-white py-2 mt-4 rounded-md hover:bg-purple-900 transition"
-  onClick={() => navigate(`/booking/${salon._id}`, { state: salon })}
->
-  Book Now
-</button>
-              </div>
-            </div>
+              {filter}
+            </button>
           ))}
         </div>
-      )}
-    </div>
+
+        {/* Search Results */}
+        {results.length === 0 ? (
+          <p className="text-center text-gray-500 font-bold">No salons found.</p>
+        ) : (
+          <div className="flex flex-col gap-6 max-w-3xl mx-auto">
+            {results.map((salon) => (
+              <div
+                key={salon._id}
+                className="bg-white rounded-2xl shadow-md overflow-hidden transition hover:shadow-lg"
+              >
+                <img
+                  src={`http://localhost:5000/uploads/${salon.shopFrontPhoto}`}
+                  alt={salon.salonName}
+                  className="w-full h-64 object-cover"
+                />
+                <div className="p-6 space-y-4">
+                  <h3 className="text-xl font-semibold">{salon.salonName}</h3>
+                  <div className="flex items-center text-sm text-gray-600">
+                    <FaMapMarkerAlt className="mr-2 text-purple-700" />
+                    {salon.address}
+                  </div>
+                  <a
+                    href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
+                      salon.address
+                    )}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-m text-teal-700 underline"
+                  >
+                    View on Map
+                  </a>
+                  <div className="flex items-center text-yellow-500 text-sm">
+                    <FaStar className="mr-1" />
+                    {salon.rating > 0
+                      ? salon.rating.toFixed(1)
+                      : "No rating yet"}
+                    {salon.reviewCount > 0 && (
+                      <span className="text-gray-500 ml-2">
+                        ({salon.reviewCount} reviews)
+                      </span>
+                    )}
+                  </div>
+                  <div className="flex flex-wrap gap-2">
+                    {salon.servicesAndTiming?.services?.map((service, idx) => (
+                      <span
+                        key={idx}
+                        className="px-3 py-1 text-xs bg-purple-100 text-purple-800 rounded-full"
+                      >
+                        {service.name}
+                      </span>
+                    ))}
+                  </div>
+                  <button
+                    className="text-white bg-gradient-to-r from-teal-400 via-teal-500 to-teal-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-teal-300 dark:focus:ring-teal-800 shadow-lg shadow-teal-500/50 dark:shadow-lg dark:shadow-teal-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 cursor-pointer "
+                    onClick={() => navigate(`/booking/${salon._id}`, { state: salon })}
+                  >
+                    Book Now
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+    </>
   );
 };
 
