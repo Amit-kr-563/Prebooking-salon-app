@@ -29,7 +29,7 @@ function App() {
   return (
     <>
       <LanguageSelector />
-    {location.pathname === "/" ? <Nav /> : <Navbar />}
+    
       <Routes>
         <Route path="/" element={<Home />} />
 

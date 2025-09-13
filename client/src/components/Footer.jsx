@@ -1,19 +1,20 @@
 import { FaTwitter, FaGithub, FaLinkedin } from "react-icons/fa";
 import { Link } from 'react-router-dom';
+import Logo from "../assets/logo.png"
 
 
 export default function Footer() {
   return (
-    <footer className="bg-[#f4f1fb] text-gray-700 px-6 py-10 ">
+    <footer className="bg-gray-200 text-gray-700 px-6 py-10 ">
       <div className="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
         {/* Brand Section */}
         <div>
-          <div className="flex items-center space-x-3">
-            <div className="bg-purple-800 text-white w-10 h-10 flex items-center justify-center rounded-md font-bold text-lg">
-              M
-            </div>
-            <h1 className="text-xl font-semibold">Project</h1>
-          </div>
+         <div className="flex items-center space-x-2">
+                   <div className="h-10 w-10">
+                     <img src={Logo} alt="Barber Illustration" className="w-full h-full" />
+                   </div>
+                   <div className="text-2xl font-bold">SalonEase</div>
+                 </div>
           <p className="mt-3 text-sm text-gray-600">
             Seamlessly navigate through our services. Your journey starts here.
           </p>
@@ -25,7 +26,7 @@ export default function Footer() {
           <ul className="space-y-2 text-sm">
             <li><Link to="/about" className="hover:underline">About Us</Link></li>
 
-            <li><a href="#" className="hover:underline">My Booking</a></li>
+            
             <li><a href="#" className="hover:underline">Services</a></li>
            <li><Link to="/help" className="hover:underline">Help</Link></li>
 

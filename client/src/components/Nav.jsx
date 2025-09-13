@@ -6,7 +6,7 @@ function Nav() {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <nav className="bg-gray-50 text-gray-900 sticky top-0 z-50 shadow-md">
+    <nav className="fixed top-0 left-0 w-full bg-teal-100 z-50">
       <div className="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center">
         
         {/* Logo */}
@@ -18,17 +18,17 @@ function Nav() {
         </div>
 
         {/* Desktop Links */}
-        <ul className="hidden md:flex space-x-6">
-          <li><a href="#hero" className="hover:text-green-500">Home</a></li>
-          <li><a href="#services" className="hover:text-green-500">Services</a></li>
-          <li><a href="#about" className="hover:text-green-500">About</a></li>
-          <li><a href="#contact" className="hover:text-green-500">Contact</a></li>
+        <ul className="hidden md:flex space-x-6 font-bold">
+          <li><a href="#hero" className="hover:text-teal-900">Home</a></li>
+          <li><a href="#services" className="hover:text-teal-900">Services</a></li>
+          <li><a href="#about" className="hover:text-teal-900">About</a></li>
+          <li><a href="#contact" className="hover:text-teal-900">Contact</a></li>
         </ul>
 
         {/* Login Button */}
         <div className="hidden md:block">
           <Link to="/login">
-            <button className="bg-green-500 px-4 py-2 rounded hover:bg-green-600 font-bold">Login Now</button>
+            <button type="button" class="text-white bg-gradient-to-r from-teal-400 via-teal-500 to-teal-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-teal-300 dark:focus:ring-teal-800 shadow-lg shadow-teal-500/50 dark:shadow-lg dark:shadow-teal-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 cursor-pointer">Login Now</button>
           </Link>
         </div>
 
@@ -54,8 +54,7 @@ function Nav() {
           <a href="#about" className="block py-2 hover:text-green-500">About</a>
           <a href="#contact" className="block py-2 hover:text-green-500">Contact</a>
           <Link to="/login">
-            <button className="w-full bg-green-500 py-2 rounded hover:bg-green-600 font-bold">Login Now</button>
-          </Link>
+<button type="button" class="text-white bg-gradient-to-r from-teal-400 via-teal-500 to-teal-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-teal-300 dark:focus:ring-teal-800 shadow-lg shadow-teal-500/50 dark:shadow-lg dark:shadow-teal-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">Login Now</button>          </Link>
         </div>
       )}
     </nav>

@@ -1,98 +1,4 @@
 
-
-
-// import { useState } from "react";
-// import OwnerAuthStep from "./OwnerAuthStep";
-// import OwnerInfoForm from "./OwnerInfoForm";
-// import SalonInfoForm from "./SalonInfoForm";
-// import ServicesAndTimingForm from "./ServicesAndTimingForm";
-// import BankDetailsForm from "./BankDetailsForm";
-
-// const SalonRegistration = () => {
-//   const [step, setStep] = useState(1);
-
-//   const [formData, setFormData] = useState({
-//     // Step 1 & 2
-//     ownerName: "",
-//     mobile: "",
-//     email: "",
-
-//     // Step 3
-//     salonName: "",
-//     address: "",
-//     genderType: "",
-//     latitude: "",
-//     longitude: "",
-//     shopFrontPhoto: null,
-//     shopInteriorPhoto: null,
-
-//     // Step 4
-//     services: [],
-//     openingTime: "",
-//     closingTime: "",
-//     workingDays: [],
-//     notes: "",
-
-//     // Step 5
-//     accountHolder: "",
-//     accountNumber: "",
-//     ifsc: "",
-//     upiId: "",
-//     bankName: "",
-//     passbookPhoto: null,
-//   });
-
-//   const nextStep = () => setStep(step + 1);
-//   const prevStep = () => setStep(step - 1);
-
-//   return (
-//     <>
-//       {step === 1 && (
-//         <OwnerAuthStep formData={formData} setFormData={setFormData} onNext={nextStep} />
-//       )}
-
-//       {step === 2 && (
-//         <OwnerInfoForm
-//           formData={formData}
-//           setFormData={setFormData}
-//           onNext={nextStep}
-//         />
-//       )}
-
-//       {step === 3 && (
-//         <SalonInfoForm
-//           formData={formData}
-//           setFormData={setFormData}
-//           onNext={nextStep}
-//           onBack={prevStep}
-//         />
-//       )}
-
-//       {step === 4 && (
-//         <ServicesAndTimingForm
-//           formData={formData}
-//           setFormData={setFormData}
-//           onNext={nextStep}
-//           onBack={prevStep}
-//         />
-//       )}
-
-//       {step === 5 && (
-//         <BankDetailsForm
-//           formData={formData}
-//           setFormData={setFormData}
-//           onNext={() => {
-//             alert("✅ All steps completed! You can now submit or store this data.");
-//             console.log("Final Form Data:", formData);
-//           }}
-//           onBack={prevStep}
-//         />
-//       )}
-//     </>
-//   );
-// };
-
-// export default SalonRegistration;
 import React, { useState } from "react";
 import OwnerInfoForm from "./OwnerInfoForm";
 import OwnerAuthStep from "./OwnerAuthStep";
@@ -128,10 +34,10 @@ const navigate = useNavigate();
   }
 });
 navigate("/login");
-      alert("🎉 Registration Successful!");
+      alert(" Registration Successful!");
       
     } catch (err) {
-      alert("❌ Registration Failed.",err.message);
+      alert(" Registration Failed.",err.message);
       console.error(err);
     }
   };
