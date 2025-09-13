@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import UserNavbar from "../components/userNavbar";
+import UserNavbar from "../components/UserNavbar";
 import { getCurrentUser } from "../service/api"; 
 
 const UserDashboard = () => {
