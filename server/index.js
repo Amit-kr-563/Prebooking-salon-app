@@ -8,6 +8,9 @@ const Routes = require('./router/authRouter');
 const salon = require('./router/registerSalon');
 const path = require('path');
 const Booking = require('./router/bookingRouter');
+const paymentRouter = require("./router/paymentRouter");
+
+
 
 dotenv.config();
 const app = express();
@@ -22,6 +25,7 @@ app.use(cors({
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+
 // ✅ Connect to database
 Connection();
 
@@ -29,7 +33,7 @@ Connection();
 app.use('/api', Routes);
 app.use('/api', salon);
 app.use('/api',Booking);
-
+app.use("/api/payment", paymentRouter);
 // ✅ Serve uploaded images statically
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 

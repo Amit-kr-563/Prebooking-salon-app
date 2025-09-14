@@ -24,6 +24,7 @@ import Payment from './pages/Payment';
 import MyBookings from './pages/user/MyBookings';
 import MySalonBookings from './pages/salon/MySalonBooking';
 import Profile from './pages/user/Profile';
+
 // Assuming this is the correct import path
 function App() {
   return (
@@ -51,7 +52,9 @@ function App() {
         <Route path="/privacy" element={<PrivacyPolicy />} />
         <Route path="/cookies" element={<CookiePolicy />} />
         <Route path="/my-bookings"element={<MyBookings />}/>
-<Route path="/my-booking"element={<MySalonBookings/>}/>
+        <Route path="/my-booking"element={<MyBookings />}/>
+
+
 
       </Routes>
       

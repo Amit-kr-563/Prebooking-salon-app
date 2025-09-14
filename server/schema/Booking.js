@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 const bookingSchema = new mongoose.Schema({
   salonId: { type: mongoose.Schema.Types.ObjectId, ref: "Shopkeeper", required: true },
@@ -18,11 +18,23 @@ const bookingSchema = new mongoose.Schema({
 
   status: {
     type: String,
-    enum: ["confirmed", "cancelled", "completed"],
-    default: "confirmed",
+    enum: ["pending", "confirmed", "cancelled", "completed"],
+    default: "pending", 
   },
 
-  // ✅ Reviews
+ 
+  paymentInfo: {
+    orderId: { type: String },
+    paymentId: { type: String }, 
+    signature: { type: String }, 
+    status: {
+      type: String,
+      enum: ["pending", "paid", "failed"],
+      default: "pending",
+    },
+  },
+
+
   reviews: [
     {
       userId: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
@@ -34,4 +46,5 @@ const bookingSchema = new mongoose.Schema({
 
   createdAt: { type: Date, default: Date.now },
 });
+
 module.exports = mongoose.model("Booking", bookingSchema);
