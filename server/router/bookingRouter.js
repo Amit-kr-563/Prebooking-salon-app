@@ -1,17 +1,13 @@
-
 const express = require("express");
 const mongoose = require("mongoose");
 const Booking = require("../schema/Booking");
 const router = express.Router();
 
-
-// ✅ Helper: convert "09:25 AM" string to Date object
 function toDateTime(dateStr, timeStr) {
   if (!dateStr || !timeStr) return null;
   return new Date(`${dateStr} ${timeStr}`);
 }
 
-// ✅ Helper: check & update old bookings
 async function updateExpiredBookings() {
   const now = new Date();
   const bookings = await Booking.find({ status: "confirmed" });
@@ -29,10 +25,6 @@ async function updateExpiredBookings() {
   }
 }
 
-
-//
-
-// ✅ Save booking with salonId
 router.post("/bookings", async (req, res) => {
   try {
     const { salonId, persons, userId, totalAmount } = req.body;
@@ -42,11 +34,11 @@ router.post("/bookings", async (req, res) => {
     }
 
     const booking = new Booking({
-      salonId: new mongoose.Types.ObjectId(salonId),   // ✅ Important
+      salonId: new mongoose.Types.ObjectId(salonId),
       userId: new mongoose.Types.ObjectId(userId),
       persons,
       totalAmount,
-      status: "confirmed"   // ya "pending" → payment ke hisab se
+      status: "confirmed",
     });
 
     await booking.save();
@@ -57,9 +49,6 @@ router.post("/bookings", async (req, res) => {
   }
 });
 
-
-
-// ✅ Fetch bookings by userId
 router.get("/bookings/user/:userId", async (req, res) => {
   try {
     await updateExpiredBookings(); // 🔹 auto-update status before fetch
@@ -75,8 +64,6 @@ router.get("/bookings/user/:userId", async (req, res) => {
   }
 });
 
-
-// ✅ Cancel booking
 router.put("/bookings/:bookingId/cancel", async (req, res) => {
   try {
     const booking = await Booking.findByIdAndUpdate(
@@ -91,16 +78,13 @@ router.put("/bookings/:bookingId/cancel", async (req, res) => {
   }
 });
 
-
-// ✅ Fetch bookings by salonId (for shopkeeper)
 router.get("/bookings/salon/:salonId", async (req, res) => {
   try {
-    await updateExpiredBookings(); // 🔹 auto-update status before fetch
+    await updateExpiredBookings();
 
     const bookings = await Booking.find({
       salonId: new mongoose.Types.ObjectId(req.params.salonId),
-    }).populate("userId"); // populate user details if needed
-
+    }).populate("userId");
     res.json(bookings);
   } catch (error) {
     console.error("Fetch Salon Bookings Error:", error);
@@ -108,38 +92,14 @@ router.get("/bookings/salon/:salonId", async (req, res) => {
   }
 });
 
-
-// ✅ Fetch bookings for a salon by date
-// router.get("/bookings/:salonId", async (req, res) => {
-//   try {
-//     await updateExpiredBookings(); // 🔹 auto-update status before fetch
-
-//     const { salonId } = req.params;
-//     const { date } = req.query;
-
-//     const bookings = await Booking.find({
-//       salonId: new mongoose.Types.ObjectId(salonId),
-//       "persons.date": date,
-//     });
-
-//     res.json(bookings);
-//   } catch (error) {
-//     console.error("Fetch Salon Bookings Error:", error);
-//     res.status(500).json({ error: "Failed to fetch salon bookings" });
-//   }
-// });
-
-
-
-// ✅ Shopkeeper ke sabhi bookings
 router.get("/bookings/salon/:salonId", async (req, res) => {
-  const bookings = await Booking.find({ salonId: req.params.salonId })
-    .populate("userId", "name email");
+  const bookings = await Booking.find({ salonId: req.params.salonId }).populate(
+    "userId",
+    "name email"
+  );
   res.json(bookings);
-})
+});
 
-
-// ✅ Add review to booking
 router.post("/bookings/:bookingId/review", async (req, res) => {
   try {
     const { rating, comment, userId } = req.body;
@@ -148,7 +108,9 @@ router.post("/bookings/:bookingId/review", async (req, res) => {
     if (!booking) return res.status(404).json({ error: "Booking not found" });
 
     if (booking.status !== "completed") {
-      return res.status(400).json({ error: "Can only review completed bookings" });
+      return res
+        .status(400)
+        .json({ error: "Can only review completed bookings" });
     }
 
     booking.reviews.push({ userId, rating, comment });
@@ -160,6 +122,5 @@ router.post("/bookings/:bookingId/review", async (req, res) => {
     res.status(500).json({ error: "Failed to add review" });
   }
 });
-
 
 module.exports = router;

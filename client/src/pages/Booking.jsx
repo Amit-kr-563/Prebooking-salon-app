@@ -1,6 +1,3 @@
-
-
-
 import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -8,6 +5,8 @@ import Slider from "react-slick";
 
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import Navbar from "../components/UserNavbar";
+import Footer from "../components/Footer";
 
 const Booking = () => {
   const navigate = useNavigate();
@@ -19,16 +18,14 @@ const Booking = () => {
   const [endTime, setEndTime] = useState("");
   const [startTime, setStartTime] = useState("");
   const [bookingDate, setBookingDate] = useState("");
-  const [bookedSlots, setBookedSlots] = useState([]); // ✅ Already booked slots
+  const [bookedSlots, setBookedSlots] = useState([]);
 
-  // Load services
   useEffect(() => {
     if (salon?.servicesAndTiming?.services) {
       setServices(salon.servicesAndTiming.services);
     }
   }, [salon]);
 
-  // ✅ Utils
   const parseTime = (timeStr) => {
     const [time, meridian] = timeStr.split(" ");
     let [hours, minutes] = time.split(":").map(Number);
@@ -47,44 +44,42 @@ const Booking = () => {
       .padStart(2, "0")} ${meridian}`;
   };
 
-  // ✅ Round up to nearest 15 min
   const roundUpToNearest15 = (mins) => {
     return Math.ceil(mins / 15) * 15;
   };
 
-  // ✅ Fetch booked slots for selected date & salon
- useEffect(() => {
-  const fetchBookings = async () => {
-    if (!bookingDate || !salon?._id) return;
-    try {
-      const res = await axios.get(
-        `http://localhost:5000/api/bookings/${salon._id}?date=${bookingDate}`
-      );
+  useEffect(() => {
+    const fetchBookings = async () => {
+      if (!bookingDate || !salon?._id) return;
+      try {
+        const res = await axios.get(
+          `http://localhost:5000/api/bookings/${salon._id}?date=${bookingDate}`
+        );
 
-      const slots = [];
+        const slots = [];
 
-      res.data.forEach((booking) => {
-        booking.persons.forEach((person) => {
-          if (person.date === bookingDate) {
-            const start = parseTime(person.startTime);
-            const end = parseTime(person.endTime);
+        res.data.forEach((booking) => {
+          booking.persons.forEach((person) => {
+            if (person.date === bookingDate) {
+              const start = parseTime(person.startTime);
+              const end = parseTime(person.endTime);
 
-            const roundedEnd = roundUpToNearest15(end);
+              const roundedEnd = roundUpToNearest15(end);
 
-            for (let mins = start; mins < roundedEnd; mins += 15) {
-              slots.push(formatTime(mins));
+              for (let mins = start; mins < roundedEnd; mins += 15) {
+                slots.push(formatTime(mins));
+              }
             }
-          }
+          });
         });
-      });
 
-      setBookedSlots(slots);
-    } catch (err) {
-      console.error("Error fetching bookings:", err);
-    }
-  };
-  fetchBookings();
-}, [bookingDate, salon]);
+        setBookedSlots(slots);
+      } catch (err) {
+        console.error("Error fetching bookings:", err);
+      }
+    };
+    fetchBookings();
+  }, [bookingDate, salon]);
 
   const calculateEndTime = (startTimeStr, personsArr) => {
     const totalDuration = personsArr.reduce((sum, p) => {
@@ -114,7 +109,6 @@ const Booking = () => {
     }
     setPersons(newPersons);
 
-    // Total price
     let sum = 0;
     newPersons.forEach((p) => {
       p.services.forEach((srv) => {
@@ -204,167 +198,170 @@ const Booking = () => {
   };
 
   return (
-    <div className="max-w-6xl mx-auto p-6 bg-gray-50 min-h-screen">
-      {/* Carousel */}
-      {salon && (
-        <div className="mb-6">
-          <Slider {...sliderSettings}>
-            {[salon.shopFrontPhoto, salon.shopInteriorPhoto]
-              .filter(Boolean)
-              .map((photo, idx) => (
-                <div key={idx}>
-                  <img
-                    src={`http://localhost:5000/uploads/${photo}`}
-                    alt={`Salon Photo ${idx + 1}`}
-                    className="w-full h-72 object-cover rounded-lg"
-                  />
-                </div>
-              ))}
-          </Slider>
-        </div>
-      )}
-
-      {/* Header */}
-      <h2 className="text-2xl font-bold">{salon?.salonName}</h2>
-      <p className="text-gray-600 flex items-center gap-2">
-        <span className="material-icons text-sm">location_on</span>
-        {salon?.address}
-      </p>
-      <p className="flex items-center gap-1 text-yellow-500 font-medium">
-        ⭐ {salon?.rating || 4.1}{" "}
-        <span className="text-gray-600">({salon?.reviewCount || 0} reviews)</span>
-      </p>
-
-      <hr className="my-6" />
-
-      {/* Booking Steps */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        {/* Step 1 */}
-        <div>
-          <h3 className="font-semibold mb-3 flex items-center gap-2">
-            <span className="material-icons">group</span> 1. Select People
-          </h3>
-          <select
-            value={persons.length}
-            onChange={(e) =>
-              setPersons(
-                Array.from(
-                  { length: parseInt(e.target.value) },
-                  () => ({ name: "", services: [] })
-                )
-              )
-            }
-            className="border p-2 rounded w-full"
-          >
-            {[1, 2, 3, 4].map((n) => (
-              <option key={n} value={n}>
-                {n} Person
-              </option>
-            ))}
-          </select>
-
-          {persons.map((p, i) => (
-            <div
-              key={i}
-              className="mt-4 border p-3 rounded-lg shadow-sm bg-gray-50"
-            >
-              <p className="font-medium mb-2">Person {i + 1}</p>
-              <input
-                type="text"
-                placeholder="Enter name"
-                value={p.name}
-                onChange={(e) => handleChange(i, "name", e.target.value)}
-                className="border p-2 rounded w-full mb-3"
-              />
-              {services.map((s) => (
-                <label
-                  key={s.name}
-                  className="flex items-center justify-between border-b py-2 text-gray-700"
-                >
-                  <div className="flex items-center gap-2">
-                    <input
-                      type="checkbox"
-                      checked={p.services.includes(s.name)}
-                      onChange={() => handleChange(i, "services", s.name)}
-                      className="accent-purple-600"
+    <>
+      {" "}
+      <Navbar />
+      <div className="max-w-6xl mx-auto p-6 bg-white min-h-screen pt-22">
+        {salon && (
+          <div className="mb-6">
+            <Slider {...sliderSettings}>
+              {[salon.shopFrontPhoto, salon.shopInteriorPhoto]
+                .filter(Boolean)
+                .map((photo, idx) => (
+                  <div key={idx}>
+                    <img
+                      src={`http://localhost:5000/uploads/${photo}`}
+                      alt={`Salon Photo ${idx + 1}`}
+                      className="w-full h-72 object-cover rounded-lg"
                     />
-                    {s.name}
                   </div>
-                  <span className="font-medium">₹ {s.price}</span>
-                </label>
+                ))}
+            </Slider>
+          </div>
+        )}
+
+        <h2 className="text-2xl font-bold">{salon?.salonName}</h2>
+        <p className="text-gray-600 flex items-center gap-2">
+          <span className="material-icons text-sm">location_on</span>
+          {salon?.address}
+        </p>
+        <p className="flex items-center gap-1 text-yellow-500 font-medium">
+          ⭐ {salon?.rating || 4.1}{" "}
+          <span className="text-gray-600">
+            ({salon?.reviewCount || 0} reviews)
+          </span>
+        </p>
+
+        <hr className="my-6" />
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div>
+            <h3 className="font-bold mb-3 flex items-center gap-2">
+              1. Select People
+            </h3>
+            <select
+              value={persons.length}
+              onChange={(e) =>
+                setPersons(
+                  Array.from({ length: parseInt(e.target.value) }, () => ({
+                    name: "",
+                    services: [],
+                  }))
+                )
+              }
+              className="border p-2 rounded w-full"
+            >
+              {[1, 2, 3, 4].map((n) => (
+                <option key={n} value={n}>
+                  {n} Person
+                </option>
               ))}
-            </div>
-          ))}
-        </div>
+            </select>
 
-        {/* Step 2 */}
-        <div>
-          <h3 className="font-semibold mb-3">2. Select a Date</h3>
-          <input
-            type="date"
-            className="border p-2 rounded w-full"
-            min={new Date().toISOString().split("T")[0]}
-            max={new Date(Date.now() + 7 * 24 * 60 * 60 * 1000)
-              .toISOString()
-              .split("T")[0]}
-            value={bookingDate}
-            onChange={(e) => setBookingDate(e.target.value)}
-          />
-        </div>
-
-        {/* Step 3 */}
-        <div>
-          <h3 className="font-semibold mb-3">3. Select a Time Slot</h3>
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 max-h-64 overflow-y-auto">
-            {salon &&
-              generateTimeSlots(
-                salon.servicesAndTiming.openingTime,
-                salon.servicesAndTiming.closingTime
-              ).map((slot) => {
-                const isBooked = bookedSlots.includes(slot);
-                return (
-                  <button
-                    key={slot}
-                    type="button"
-                    disabled={isBooked}
-                    onClick={() => handleStartTimeChange(slot)}
-                    className={`border rounded-md px-3 py-2 text-sm ${
-                      isBooked
-                        ? "bg-gray-300 text-gray-600 cursor-not-allowed"
-                        : startTime === slot
-                        ? "bg-purple-600 text-white"
-                        : "hover:bg-gray-100"
-                    }`}
+            {persons.map((p, i) => (
+              <div
+                key={i}
+                className="mt-4 border p-3 rounded-lg shadow-sm bg-gray-50"
+              >
+                <p className="font-medium mb-2">Person {i + 1}</p>
+                <input
+                  type="text"
+                  placeholder="Enter name"
+                  value={p.name}
+                  onChange={(e) => handleChange(i, "name", e.target.value)}
+                  className="border p-2 rounded w-full mb-3"
+                />
+                {services.map((s) => (
+                  <label
+                    key={s.name}
+                    className="flex items-center justify-between border-b py-2 text-gray-700"
                   >
-                    {isBooked ? "Already Booked" : slot}
-                  </button>
-                );
-              })}
+                    <div className="flex items-center gap-2">
+                      <input
+                        type="checkbox"
+                        checked={p.services.includes(s.name)}
+                        onChange={() => handleChange(i, "services", s.name)}
+                        className="accent-teal-600"
+                      />
+                      {s.name}
+                    </div>
+                    <span className="font-medium">₹ {s.price}</span>
+                  </label>
+                ))}
+              </div>
+            ))}
+          </div>
+
+          <div>
+            <h3 className="font-bold mb-3">2. Select a Date</h3>
+            <input
+              type="date"
+              className="border p-2 rounded w-full"
+              min={new Date().toISOString().split("T")[0]}
+              max={
+                new Date(Date.now() + 7 * 24 * 60 * 60 * 1000)
+                  .toISOString()
+                  .split("T")[0]
+              }
+              value={bookingDate}
+              onChange={(e) => setBookingDate(e.target.value)}
+            />
+          </div>
+
+          <div>
+            <h3 className="font-bold mb-3">3. Select a Time Slot</h3>
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 max-h-64 overflow-y-auto">
+              {salon &&
+                generateTimeSlots(
+                  salon.servicesAndTiming.openingTime,
+                  salon.servicesAndTiming.closingTime
+                ).map((slot) => {
+                  const isBooked = bookedSlots.includes(slot);
+                  return (
+                    <button
+                      key={slot}
+                      type="button"
+                      disabled={isBooked}
+                      onClick={() => handleStartTimeChange(slot)}
+                      className={`border rounded-md px-3 py-2 text-sm ${
+                        isBooked
+                          ? "bg-gray-300 text-gray-600 cursor-not-allowed"
+                          : startTime === slot
+                          ? "bg-teal-600 text-white"
+                          : "hover:bg-gray-100"
+                      }`}
+                    >
+                      {isBooked ? "Already Booked" : slot}
+                    </button>
+                  );
+                })}
+            </div>
           </div>
         </div>
-      </div>
 
-      <hr className="my-6" />
+        <hr className="my-6" />
 
-      {/* Footer */}
-      <div className="flex justify-between items-center flex-wrap gap-3">
-        <p className="text-lg font-bold">
-          Total: <span className="ml-2">₹ {total}</span>
-        </p>
-        {endTime && (
-          <p className="text-lg font-bold text-green-600">End Time: {endTime}</p>
-        )}
-        <button
-          type="button"
-          onClick={handlePayNow}
-          className="bg-purple-600 text-white px-6 py-2 rounded-lg shadow-md hover:bg-purple-700"
-        >
-          ₹ Pay Now
-        </button>
+        <div className="flex justify-between items-center flex-wrap gap-3">
+          <p className="text-lg font-bold">
+            Total: <span className="ml-2">₹ {total}</span>
+          </p>
+          {endTime && (
+            <p className="text-lg font-bold text-teal-600">
+              End Time: {endTime}
+            </p>
+          )}
+          <button
+            type="button"
+            onClick={handlePayNow}
+            className="text-white bg-gradient-to-r from-teal-400 via-teal-500 to-teal-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-teal-300 dark:focus:ring-teal-800 shadow-lg shadow-teal-500/50 dark:shadow-lg dark:shadow-teal-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 cursor-pointer "
+          >
+            ₹ Pay Now
+          </button>
+        </div>
       </div>
-    </div>
+      <Footer />
+    </>
   );
 };
 
 export default Booking;
-

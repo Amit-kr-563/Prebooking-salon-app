@@ -1,10 +1,8 @@
-
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import UserNavbar from "../components/UserNavbar";
 import { getCurrentUser } from "../service/api";
 
-// Import images
 import haircutMen from "../assets/haircut.jpg";
 import beardTrim from "../assets/shaving.jpg";
 import shaving from "../assets/shaving.jpg";
@@ -22,7 +20,6 @@ import bridal from "../assets/ob.jpg";
 import skinCare from "../assets/massage.jpg";
 import nailArt from "../assets/massage.jpg";
 import hairStyling from "../assets/massage.jpg";
-
 
 const UserDashboard = () => {
   const [user, setUser] = useState(null);

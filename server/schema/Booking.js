@@ -1,7 +1,11 @@
 const mongoose = require("mongoose");
 
 const bookingSchema = new mongoose.Schema({
-  salonId: { type: mongoose.Schema.Types.ObjectId, ref: "Shopkeeper", required: true },
+  salonId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Shopkeeper",
+    required: true,
+  },
   userId: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
 
   persons: [
@@ -19,21 +23,19 @@ const bookingSchema = new mongoose.Schema({
   status: {
     type: String,
     enum: ["pending", "confirmed", "cancelled", "completed"],
-    default: "pending", 
+    default: "pending",
   },
 
- 
   paymentInfo: {
     orderId: { type: String },
-    paymentId: { type: String }, 
-    signature: { type: String }, 
+    paymentId: { type: String },
+    signature: { type: String },
     status: {
       type: String,
       enum: ["pending", "paid", "failed"],
       default: "pending",
     },
   },
-
 
   reviews: [
     {

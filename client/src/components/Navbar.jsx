@@ -1,5 +1,5 @@
-import React from 'react';
-import { Menu } from 'lucide-react';
+import React from "react";
+import { Menu } from "lucide-react";
 
 const Navbar = () => {
   return (

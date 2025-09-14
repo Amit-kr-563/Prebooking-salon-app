@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { getCurrentUser } from "../service/api"; 
+import React, { useEffect, useState } from "react";
+import { getCurrentUser } from "../service/api";
 import { useNavigate } from "react-router-dom";
 
 const ShopkeeperDashboard = () => {
@@ -12,7 +12,7 @@ const ShopkeeperDashboard = () => {
     const fetchShop = async () => {
       try {
         const token = localStorage.getItem("token");
-        
+
         if (!token) {
           setError("No token found. Please login again.");
           setLoading(false);
@@ -38,7 +38,7 @@ const ShopkeeperDashboard = () => {
   const handleLogout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("user");
-    navigate("/login"); // 🔁 Redirect to login page
+    navigate("/login");
   };
 
   if (loading) return <p>Loading shopkeeper profile...</p>;
@@ -63,12 +63,24 @@ const ShopkeeperDashboard = () => {
         </button>
       </div>
 
-      <p><strong>Salon Name:</strong> {shop.salonName}</p>
-      <p><strong>Owner Name:</strong> {shop.ownerName}</p>
-      <p><strong>Mobile:</strong> {shop.mobile}</p>
-      <p><strong>Address:</strong> {shop.address}</p>
-      <p><strong>Bank:</strong> {shop.bankName} ({shop.accountNumber})</p>
-      <p><strong>Category/Gender:</strong> {shop.genderType}</p>
+      <p>
+        <strong>Salon Name:</strong> {shop.salonName}
+      </p>
+      <p>
+        <strong>Owner Name:</strong> {shop.ownerName}
+      </p>
+      <p>
+        <strong>Mobile:</strong> {shop.mobile}
+      </p>
+      <p>
+        <strong>Address:</strong> {shop.address}
+      </p>
+      <p>
+        <strong>Bank:</strong> {shop.bankName} ({shop.accountNumber})
+      </p>
+      <p>
+        <strong>Category/Gender:</strong> {shop.genderType}
+      </p>
 
       <div>
         <strong>Services:</strong>

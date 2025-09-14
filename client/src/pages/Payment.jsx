@@ -8,11 +8,13 @@ const Payment = () => {
 
   const handlePayment = async () => {
     try {
-      
-      const { data } = await axios.post("http://localhost:5000/api/payment/order", {
-        bookingId,
-        amount: totalAmount,
-      });
+      const { data } = await axios.post(
+        "http://localhost:5000/api/payment/order",
+        {
+          bookingId,
+          amount: totalAmount,
+        }
+      );
 
       const options = {
         key: import.meta.env.VITE_RAZORPAY_KEY_ID,

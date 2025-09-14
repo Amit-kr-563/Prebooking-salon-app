@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import OwnerInfoForm from "./OwnerInfoForm";
 import OwnerAuthStep from "./OwnerAuthStep";
@@ -6,13 +5,12 @@ import SalonInfoForm from "./SalonInfoForm";
 import ServicesAndTimingForm from "./ServicesAndTimingForm";
 import BankDetailsForm from "./BankDetailsForm";
 import axios from "axios";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 
- 
 const SalonRegistration = () => {
   const [step, setStep] = useState(1);
   const [formData, setFormData] = useState({});
-const navigate = useNavigate();
+  const navigate = useNavigate();
   const handleNext = () => setStep((prev) => prev + 1);
   const handleBack = () => setStep((prev) => prev - 1);
 
@@ -28,23 +26,25 @@ const navigate = useNavigate();
         }
       });
 
-      const response = await axios.post('http://localhost:5000/api/register/shop', formData, {
-  headers: {
-    'Content-Type': 'multipart/form-data'
-  }
-});
-navigate("/login");
+      const response = await axios.post(
+        "http://localhost:5000/api/register/shop",
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+      navigate("/login");
       alert(" Registration Successful!");
-      
     } catch (err) {
-      alert(" Registration Failed.",err.message);
+      alert(" Registration Failed.", err.message);
       console.error(err);
     }
   };
 
   return (
     <>
-      
       {step === 1 && (
         <OwnerAuthStep
           onNext={handleNext}

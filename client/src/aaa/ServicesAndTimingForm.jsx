@@ -1,21 +1,44 @@
 import React, { useState } from "react";
 
 const ServicesAndTimingForm = ({ formData, setFormData, onNext, onBack }) => {
-  const [services, setServices] = useState([{ name: "", price: "", duration: "" }]);
+  const [services, setServices] = useState([
+    { name: "", price: "", duration: "" },
+  ]);
   const [openingTime, setOpeningTime] = useState("");
   const [closingTime, setClosingTime] = useState("");
   const [workingDays, setWorkingDays] = useState([]);
   const [notes, setNotes] = useState("");
 
   const serviceOptions = [
-    "Haircut", "Facial", "Shaving", "Hair Color", "Spa",
-    "Makeup", "Threading", "Bleach", "Body Massage", "Manicure", "Pedicure",
+    "Haircut",
+    "Facial",
+    "Shaving",
+    "Hair Color",
+    "Spa",
+    "Makeup",
+    "Threading",
+    "Bleach",
+    "Body Massage",
+    "Manicure",
+    "Pedicure",
   ];
 
   const timeOptions = [
-    "07:00 AM", "08:00 AM", "09:00 AM", "10:00 AM", "11:00 AM",
-    "12:00 PM", "01:00 PM", "02:00 PM", "03:00 PM", "04:00 PM",
-    "05:00 PM", "06:00 PM", "07:00 PM", "08:00 PM", "09:00 PM",
+    "07:00 AM",
+    "08:00 AM",
+    "09:00 AM",
+    "10:00 AM",
+    "11:00 AM",
+    "12:00 PM",
+    "01:00 PM",
+    "02:00 PM",
+    "03:00 PM",
+    "04:00 PM",
+    "05:00 PM",
+    "06:00 PM",
+    "07:00 PM",
+    "08:00 PM",
+    "09:00 PM",
   ];
 
   const handleAddService = () => {
@@ -23,7 +46,7 @@ const ServicesAndTimingForm = ({ formData, setFormData, onNext, onBack }) => {
   };
 
   const handleRemoveService = (index) => {
-    if (services.length === 1) return; // last service ko remove na kare
+    if (services.length === 1) return;
     const updatedServices = services.filter((_, i) => i !== index);
     setServices(updatedServices);
   };
@@ -59,7 +82,7 @@ const ServicesAndTimingForm = ({ formData, setFormData, onNext, onBack }) => {
     setFormData(updatedData);
     console.log(" All Form Data So Far:", updatedData);
 
-    onNext(); // Go to next step
+    onNext();
   };
 
   return (
@@ -76,20 +99,26 @@ const ServicesAndTimingForm = ({ formData, setFormData, onNext, onBack }) => {
           <div key={index} className="grid grid-cols-4 gap-4 mb-4 ">
             <select
               value={service.name}
-              onChange={(e) => handleServiceChange(index, "name", e.target.value)}
+              onChange={(e) =>
+                handleServiceChange(index, "name", e.target.value)
+              }
               className="p-2 border rounded "
               required
             >
               <option value="">Select Service</option>
               {serviceOptions.map((s) => (
-                <option key={s} value={s}>{s}</option>
+                <option key={s} value={s}>
+                  {s}
+                </option>
               ))}
             </select>
             <input
               type="number"
               placeholder="Price ₹"
               value={service.price}
-              onChange={(e) => handleServiceChange(index, "price", e.target.value)}
+              onChange={(e) =>
+                handleServiceChange(index, "price", e.target.value)
+              }
               className="p-2 border rounded"
               required
             />
@@ -97,7 +126,9 @@ const ServicesAndTimingForm = ({ formData, setFormData, onNext, onBack }) => {
               type="text"
               placeholder="Duration (e.g. 30min)"
               value={service.duration}
-              onChange={(e) => handleServiceChange(index, "duration", e.target.value)}
+              onChange={(e) =>
+                handleServiceChange(index, "duration", e.target.value)
+              }
               className="p-2 border rounded"
               required
             />
@@ -132,7 +163,9 @@ const ServicesAndTimingForm = ({ formData, setFormData, onNext, onBack }) => {
             >
               <option value="">Select Opening Time</option>
               {timeOptions.map((time) => (
-                <option key={time} value={time}>{time}</option>
+                <option key={time} value={time}>
+                  {time}
+                </option>
               ))}
             </select>
           </div>
@@ -147,12 +180,13 @@ const ServicesAndTimingForm = ({ formData, setFormData, onNext, onBack }) => {
             >
               <option value="">Select Closing Time</option>
               {timeOptions.map((time) => (
-                <option key={time} value={time}>{time}</option>
+                <option key={time} value={time}>
+                  {time}
+                </option>
               ))}
             </select>
           </div>
         </div>
-
 
         <div className="mb-4">
           <label className="block font-bold mb-2">Select Working Days:</label>
@@ -161,10 +195,11 @@ const ServicesAndTimingForm = ({ formData, setFormData, onNext, onBack }) => {
               <button
                 type="button"
                 key={day}
-                className={`px-3 py-1 rounded border ${workingDays.includes(day)
+                className={`px-3 py-1 rounded border ${
+                  workingDays.includes(day)
                     ? "bg-teal-500 text-white"
                     : "bg-gray-200 text-gray-700"
-                  }`}
+                }`}
                 onClick={() => toggleWorkingDay(day)}
               >
                 {day}
@@ -174,7 +209,9 @@ const ServicesAndTimingForm = ({ formData, setFormData, onNext, onBack }) => {
         </div>
 
         <div className="mb-6">
-          <label className="block font-bold mb-1">Additional Notes (Optional):</label>
+          <label className="block font-bold mb-1">
+            Additional Notes (Optional):
+          </label>
           <textarea
             value={notes}
             onChange={(e) => setNotes(e.target.value)}
@@ -205,4 +242,4 @@ const ServicesAndTimingForm = ({ formData, setFormData, onNext, onBack }) => {
   );
 };
 
-export default ServicesAndTimingForm;  
+export default ServicesAndTimingForm;

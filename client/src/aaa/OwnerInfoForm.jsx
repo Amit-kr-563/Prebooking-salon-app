@@ -28,13 +28,14 @@ const OwnerInfoForm = ({ onNext, formData, setFormData }) => {
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-300 px-4">
       <div className="flex w-full max-w-6xl h-[80vh] bg-white rounded-xl shadow-md overflow-hidden">
-        
-        {/* Left Side – Image / Animation */}
         <div className="md:w-1/2 w-full bg-gray-100 flex justify-center items-center p-4">
-          <Lottie animationData={animationData} loop={true} style={{ width: '100%', maxWidth: 400 }} />
+          <Lottie
+            animationData={animationData}
+            loop={true}
+            style={{ width: "100%", maxWidth: 400 }}
+          />
         </div>
 
-        {/* Right Side – Form */}
         <div className="md:w-1/2 w-full flex justify-center items-center p-6">
           <div className="w-full max-w-md">
             <h2 className="text-2xl font-bold text-center text-teal-600 mb-6">
@@ -55,7 +56,9 @@ const OwnerInfoForm = ({ onNext, formData, setFormData }) => {
                   className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:outline-none transition duration-200"
                 />
                 {errors.ownerName && (
-                  <p className="text-red-500 text-sm mt-1">{errors.ownerName}</p>
+                  <p className="text-red-500 text-sm mt-1">
+                    {errors.ownerName}
+                  </p>
                 )}
               </div>
 
@@ -100,12 +103,11 @@ const OwnerInfoForm = ({ onNext, formData, setFormData }) => {
                 type="submit"
                 className="text-white font-bold bg-gradient-to-r from-teal-400 via-teal-500 to-teal-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-teal-300 dark:focus:ring-teal-800 shadow-lg shadow-teal-500/50 dark:shadow-lg dark:shadow-teal-800/80 rounded-lg text-xl px-5 py-2.5 text-center me-2 mb-2 cursor-pointer w-full"
               >
-                Next 
+                Next
               </button>
             </form>
           </div>
         </div>
-
       </div>
     </div>
   );

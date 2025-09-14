@@ -15,7 +15,6 @@ const UserNavbar = () => {
     navigate("/login");
   };
 
-  // Close profile dropdown on outside click
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (profileRef.current && !profileRef.current.contains(event.target)) {
@@ -26,10 +25,12 @@ const UserNavbar = () => {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  // Close mobile menu on outside click
   useEffect(() => {
     const handleClickOutside = (event) => {
-      if (mobileMenuRef.current && !mobileMenuRef.current.contains(event.target)) {
+      if (
+        mobileMenuRef.current &&
+        !mobileMenuRef.current.contains(event.target)
+      ) {
         setMenuOpen(false);
       }
     };
@@ -48,22 +49,23 @@ const UserNavbar = () => {
   return (
     <nav className="w-full bg-teal-100 shadow-md fixed top-0 left-0 z-50">
       <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-        {/* Logo */}
         <div
           className="flex items-center space-x-2 cursor-pointer"
           onClick={() => navigate("/")}
         >
           <div className="flex items-center space-x-2">
-                    <div className="h-10 w-10">
-                      <img src={logo} alt="Barber Illustration" className="w-full h-full" />
-                    </div>
-                    <div className="text-2xl font-bold">SalonEase</div>
-                  </div>
+            <div className="h-10 w-10">
+              <img
+                src={logo}
+                alt="Barber Illustration"
+                className="w-full h-full"
+              />
+            </div>
+            <div className="text-2xl font-bold">SalonEase</div>
+          </div>
         </div>
 
-        {/* Desktop Menu */}
         <div className="hidden md:flex items-center space-x-6">
-          {/* Profile Dropdown */}
           <div className="relative" ref={profileRef}>
             <button
               onClick={() => setProfileOpen(!profileOpen)}
@@ -95,7 +97,6 @@ const UserNavbar = () => {
           </button>
         </div>
 
-        {/* Mobile Menu Button */}
         <button
           className="md:hidden text-gray-800"
           onClick={() => setMenuOpen(!menuOpen)}
@@ -103,7 +104,6 @@ const UserNavbar = () => {
           {menuOpen ? <X size={24} /> : <Menu size={24} />}
         </button>
 
-        {/* Mobile Menu */}
         {menuOpen && (
           <div
             ref={mobileMenuRef}
