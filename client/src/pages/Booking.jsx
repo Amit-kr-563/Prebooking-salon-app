@@ -53,7 +53,7 @@ const Booking = () => {
       if (!bookingDate || !salon?._id) return;
       try {
         const res = await axios.get(
-          `http://localhost:5000/api/bookings/${salon._id}?date=${bookingDate}`
+          `/api/bookings/${salon._id}?date=${bookingDate}`
         );
 
         const slots = [];
@@ -172,7 +172,7 @@ const Booking = () => {
       };
 
       const res = await axios.post(
-        "http://localhost:5000/api/bookings",
+        "/api/bookings",
         bookingData
       );
 
@@ -196,6 +196,7 @@ const Booking = () => {
     autoplaySpeed: 3000,
     pauseOnHover: true,
   };
+  const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || "";
 
   return (
     <>
@@ -204,20 +205,20 @@ const Booking = () => {
       <div className="max-w-6xl mx-auto p-6 bg-white min-h-screen pt-22">
         {salon && (
           <div className="mb-6">
-            <Slider {...sliderSettings}>
-              {[salon.shopFrontPhoto, salon.shopInteriorPhoto]
-                .filter(Boolean)
-                .map((photo, idx) => (
-                  <div key={idx}>
-                    <img
-                      src={`http://localhost:5000/uploads/${photo}`}
-                      alt={`Salon Photo ${idx + 1}`}
-                      className="w-full h-72 object-cover rounded-lg"
-                    />
-                  </div>
-                ))}
-            </Slider>
-          </div>
+  <Slider {...sliderSettings}>
+    {[salon.shopFrontPhoto, salon.shopInteriorPhoto]
+      .filter(Boolean)
+      .map((photo, idx) => (
+        <div key={idx}>
+          <img
+            src={`${BACKEND_URL}/uploads/${photo}`}
+            alt={`Salon Photo ${idx + 1}`}
+            className="w-full h-72 object-cover rounded-lg"
+          />
+        </div>
+      ))}
+  </Slider>
+</div>
         )}
 
         <h2 className="text-2xl font-bold">{salon?.salonName}</h2>

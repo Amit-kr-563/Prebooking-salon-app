@@ -12,6 +12,7 @@ const SearchResults = () => {
   const [activeFilter, setActiveFilter] = useState("Rating");
 
   const searchParams = location.state || {};
+  const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || "";
 
   useEffect(() => {
     const fetchResults = async () => {
@@ -83,7 +84,7 @@ const SearchResults = () => {
                 className="flex-shrink-0 w-64 bg-white rounded-2xl shadow-md overflow-hidden transition hover:shadow-lg"
               >
                 <img
-                  src={`http://localhost:5000/uploads/${salon.shopFrontPhoto}`}
+                  src={`${BACKEND_URL}/uploads/${salon.shopFrontPhoto}`}
                   alt={salon.salonName}
                   className="w-full h-40 object-cover"
                 />

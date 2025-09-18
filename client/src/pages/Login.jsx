@@ -9,6 +9,7 @@ export default function Login() {
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
+  const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || "";
 
   const handleLogin = async () => {
     if (!mobile || !password) {
@@ -17,10 +18,10 @@ export default function Login() {
     }
     setLoading(true);
     try {
-      const res = await axios.post("http://localhost:5000/api/login", {
-        mobile,
-        password,
-      });
+      const res = await axios.post(`${BACKEND_URL}/api/login`, {
+  mobile,
+  password,
+});
       const { token, role, data } = res.data;
       localStorage.setItem("token", token);
       localStorage.setItem("role", role);
@@ -39,6 +40,7 @@ export default function Login() {
     }
     setLoading(false);
   };
+  
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-300 px-4">
