@@ -14,10 +14,14 @@ const app = express();
 
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: [
+      "http://localhost:5173", // for local dev
+      "https://prebooking-salon-app-2.onrender.com" // your deployed frontend
+    ],
     credentials: true,
   })
 );
+
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
