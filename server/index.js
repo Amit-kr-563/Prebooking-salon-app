@@ -1,65 +1,51 @@
-const express = require("express");
-const cors = require("cors");
-const bodyParser = require("body-parser");
-const dotenv = require("dotenv");
-const path = require("path");
+import express from "express";
+import cors from "cors";
+import dotenv from "dotenv";
+import path from "path";
 
 // Database connection
-const Connection = require("./database/db");
+import Connection from "./database/db.js";
 
 // Routers
-const Routes = require("./router/authRouter");
-const salon = require("./router/registerSalon");
-const Booking = require("./router/bookingRouter");
-const paymentRouter = require("./router/paymentRouter");
+import Routes from "./router/authRouter.js";
+import salon from "./router/registerSalon.js";
+import Booking from "./router/bookingRouter.js";
+import paymentRouter from "./router/paymentRouter.js";
 
 dotenv.config();
 const app = express();
 
-// CORS configuration
-const allowedOrigins = [
-  "http://localhost:5173", // local dev
-  "https://prebooking-salon-app-2.onrender.com" // deployed frontend
-];
-
+// ---------- CORS Configuration ----------
 app.use(
   cors({
-    origin: function (origin, callback) {
-      // allow requests with no origin like mobile apps or curl
-      if (!origin) return callback(null, true);
-      if (allowedOrigins.indexOf(origin) === -1) {
-        const msg = `The CORS policy for this site does not allow access from the specified Origin.`;
-        return callback(new Error(msg), false);
-      }
-      return callback(null, true);
-    },
-    credentials: true,
+    origin: true, // allow all origins (works for Render)
+    credentials: true, // allows cookies, authorization headers
   })
 );
 
-// Middleware
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+// ---------- Middleware ----------
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
-// Database
+// ---------- Database ----------
 Connection();
 
-// Routes
+// ---------- Routes ----------
 app.use("/api", Routes);
 app.use("/api", salon);
 app.use("/api", Booking);
 app.use("/api/payment", paymentRouter);
 
 // Serve uploaded files
-app.use("/uploads", express.static(path.join(__dirname, "uploads")));
+app.use("/uploads", express.static(path.join(path.resolve(), "uploads")));
 
 // Test route
 app.get("/", (req, res) => {
   res.send("API running...");
 });
 
-// Start server
+// ---------- Start Server ----------
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () =>
-  console.log(`Server running on port ${PORT}`)
-);
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+});

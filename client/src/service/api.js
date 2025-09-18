@@ -8,6 +8,7 @@ export const registerUser = async (data) => {
   return await API.post("/register/user", data);
 };
 
+
 export const registerShopkeeper = async (form) => {
   return await API.post("/register/shop", form, {
     headers: {
