@@ -3,10 +3,7 @@ import cors from "cors";
 import dotenv from "dotenv";
 import path from "path";
 
-// Database connection
 import Connection from "./database/db.js";
-
-// Routers
 import Routes from "./router/authRouter.js";
 import salon from "./router/registerSalon.js";
 import Booking from "./router/bookingRouter.js";
@@ -16,12 +13,15 @@ dotenv.config();
 const app = express();
 
 // ---------- CORS Configuration ----------
-app.use(
-  cors({
-    origin: true, // allow all origins (works for Render)
-    credentials: true, // allows cookies, authorization headers
-  })
-);
+app.use(cors({
+  origin: true,            // allow all origins
+  methods: ['GET','POST','PUT','DELETE','OPTIONS'], // allow all methods
+  allowedHeaders: ['Content-Type', 'Authorization'], // allow required headers
+  credentials: true        // allow cookies/authorization headers
+}));
+
+// Handle OPTIONS preflight requests
+app.options('*', cors());
 
 // ---------- Middleware ----------
 app.use(express.json());
